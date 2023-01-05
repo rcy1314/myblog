@@ -2,19 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>draw.io on 小惡魔 - AppleBOY</title>
-    <link>http://example.com/tags/draw.io/</link>
+    <link>https://rcy1314.github.io/myblog/tags/draw.io/</link>
     <description>Recent content in draw.io on 小惡魔 - AppleBOY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>appleboy.tw@gmail.com (Appleboy)</managingEditor>
-    <webMaster>appleboy.tw@gmail.com (Appleboy)</webMaster>
-    <lastBuildDate>Sat, 17 Sep 2022 21:30:26 +0800</lastBuildDate><atom:link href="http://example.com/tags/draw.io/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Sep 2022 21:30:26 +0800</lastBuildDate><atom:link href="https://rcy1314.github.io/myblog/tags/draw.io/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>三款好用的繪圖工具來解決系統架構或流程圖</title>
-      <link>http://example.com/2022/09/three-tools-design-system-architecture-and-flow/</link>
+      <link>https://rcy1314.github.io/myblog/posts/three-tools-design-system-architecture-and-flow/</link>
       <pubDate>Sat, 17 Sep 2022 21:30:26 +0800</pubDate>
-      <author>appleboy.tw@gmail.com (Appleboy)</author>
-      <guid>http://example.com/2022/09/three-tools-design-system-architecture-and-flow/</guid>
+      
+      <guid>https://rcy1314.github.io/myblog/posts/three-tools-design-system-architecture-and-flow/</guid>
       <description>&lt;p&gt;&lt;img
   src=&#34;https://i.imgur.com/0sA0St5.png&#34;
   alt=&#34;drwaio 01&#34;

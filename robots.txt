@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /tags/*
 
-Sitemap: http://example.com/sitemap.xml
+Sitemap: https://rcy1314.github.io/myblog/sitemap.xml

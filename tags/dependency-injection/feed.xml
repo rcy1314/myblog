@@ -2,19 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dependency injection on 小惡魔 - AppleBOY</title>
-    <link>http://example.com/tags/dependency-injection/</link>
+    <link>https://rcy1314.github.io/myblog/tags/dependency-injection/</link>
     <description>Recent content in dependency injection on 小惡魔 - AppleBOY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>appleboy.tw@gmail.com (Appleboy)</managingEditor>
-    <webMaster>appleboy.tw@gmail.com (Appleboy)</webMaster>
-    <lastBuildDate>Sat, 10 Sep 2022 13:17:01 +0800</lastBuildDate><atom:link href="http://example.com/tags/dependency-injection/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 10 Sep 2022 13:17:01 +0800</lastBuildDate><atom:link href="https://rcy1314.github.io/myblog/tags/dependency-injection/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用 Google 團隊推出的 Wire 工具解決 Dependency Injection</title>
-      <link>http://example.com/2022/09/dependency-injection-in-go/</link>
+      <link>https://rcy1314.github.io/myblog/posts/dependency-injection-in-go/</link>
       <pubDate>Sat, 10 Sep 2022 13:17:01 +0800</pubDate>
-      <author>appleboy.tw@gmail.com (Appleboy)</author>
-      <guid>http://example.com/2022/09/dependency-injection-in-go/</guid>
+      
+      <guid>https://rcy1314.github.io/myblog/posts/dependency-injection-in-go/</guid>
       <description>&lt;p&gt;&lt;img
   src=&#34;https://i.imgur.com/DZOA6zy.png&#34;
   alt=&#34;proposal&#34;

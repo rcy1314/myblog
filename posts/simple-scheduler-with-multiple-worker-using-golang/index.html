@@ -16,18 +16,18 @@
 
     <title>系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言) | 小惡魔 - AppleBOY</title>
 
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/myblog/favicon/favicon.svg" />
 <link
   rel="icon"
   type="image/png"
   sizes="32x32"
-  href="/favicon/favicon-32x32.png"
+  href="/myblog/favicon/favicon-32x32.png"
 />
 <link
   rel="icon"
   type="image/png"
   sizes="16x16"
-  href="/favicon/favicon-16x16.png"
+  href="/myblog/favicon/favicon-16x16.png"
 />
 
     
@@ -41,7 +41,7 @@
   <meta property="og:description" content="
 不同的服務都會有需要處理比較久的任務，這些任務是不能即時執行完成，才回應給前端，這樣使用者體驗會非常的差。將類型的任務存在資料庫或放在消息對列就是一種處理方式，接著啟動另一個服務來消化非即時性的任務，而常見的處理方式就是在服務內啟動多個 Worker Node 來平行消化任務 (如上圖)。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/" />
+<meta property="og:url" content="https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/" />
 
 <meta property="article:section" content="Posts" />
     <meta
@@ -66,15 +66,15 @@
       "@type": "TechArticle",
       "articleSection": "Posts",
       "name": "系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言)",
-      "url" : "http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/",
+      "url" : "https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/",
       "headline": "系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言)",
       "description": "\n不同的服務都會有需要處理比較久的任務，這些任務是不能即時執行完成，才回應給前端，這樣使用者體驗會非常的差。將類型的任務存在資料庫或放在消息對列就是一種處理方式，接著啟動另一個服務來消化非即時性的任務，而常見的處理方式就是在服務內啟動多個 Worker Node 來平行消化任務 (如上圖)。",
-      "wordCount" : "517",
+      "wordCount" : "402",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/"
+          "@id": "https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/"
       },
       "copyrightHolder" : "小惡魔 - AppleBOY",
       "copyrightYear" : "2022",
@@ -84,7 +84,7 @@
       "publisher":{
           "@type":"Organization",
           "name": "小惡魔 - AppleBOY",
-          "url": "http://example.com",
+          "url": "https://rcy1314.github.io/myblog/",
           "logo": {
               "@type": "ImageObject",
               "url": "https://lh3.googleusercontent.com/Kq9CxHZWopKj__EgF_BpzLv8FhwvDkc0iacrl9V5IJjpr-dZ7Y5O-Vc1i9FhGQ8gHTdKeBisG_1ie1IONQXmK0a3myyl_BNouP76CLHGHRzsPPRgRF3RiKYqOkdS86mZOIu7KYFTUio=w1920-h1080",
@@ -97,68 +97,68 @@
 
 
     
-  <script src="/js/colortheme-d3e4d351.bundle.min.js"></script>
-<script src="/js/main-56ca818c.bundle.min.js"></script>
+  <script src="/myblog/js/colortheme-d3e4d351.bundle.min.js"></script>
+<script src="/myblog/js/main-56ca818c.bundle.min.js"></script>
 
 <link
   rel="preload"
   as="font"
-  href="/fonts/Metropolis.woff2"
+  href="/myblog/fonts/Metropolis.woff2"
   type="font/woff2"
   crossorigin="anonymous"
 />
 <link
   rel="preload"
   as="font"
-  href="/fonts/LiberationSans.woff2"
+  href="/myblog/fonts/LiberationSans.woff2"
   type="font/woff2"
   crossorigin="anonymous"
 />
 
 <link
   rel="preload"
-  href="/main-1ebf16ca.min.css"
+  href="/myblog/main-1ebf16ca.min.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/main-1ebf16ca.min.css"
+  href="/myblog/main-1ebf16ca.min.css"
   media="all"
 />
 
 <link
   rel="preload"
-  href="/mobile-79ddc617.min.css"
+  href="/myblog/mobile-79ddc617.min.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/mobile-79ddc617.min.css"
+  href="/myblog/mobile-79ddc617.min.css"
   media="screen and (max-width: 45rem)"
 />
 
 <link
   rel="preload"
-  href="/print-735ccc12.min.css"
+  href="/myblog/print-735ccc12.min.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/print-735ccc12.min.css"
+  href="/myblog/print-735ccc12.min.css"
   media="print"
 />
 
 <link
   rel="preload"
-  href="/custom.css"
+  href="/myblog/custom.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/custom.css"
+  href="/myblog/custom.css"
   media="all"
 />
-  <link href="http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/" rel="canonical" type="text/html" />
+  <link href="https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -195,11 +195,11 @@
       </label>
     
     <div>
-      <a class="gdoc-brand gdoc-header__link" href="http://example.com">
+      <a class="gdoc-brand gdoc-header__link" href="https://rcy1314.github.io/myblog/">
         <span class="flex align-center">
           <img
             class="gdoc-brand__img"
-            src="/brand.svg"
+            src="/myblog/brand.svg"
             alt=""
           />
           <span class="gdoc-brand__title">小惡魔 - AppleBOY</span>
@@ -227,7 +227,7 @@
         </span>
 
         <span class="gdoc-menu-header__home">
-          <a href="http://example.com" class="gdoc-header__link">
+          <a href="https://rcy1314.github.io/myblog/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
               <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
@@ -274,7 +274,7 @@
       placeholder="Search..."
       aria-label="Search"
       maxlength="64"
-      data-site-base-url="http://example.com"
+      data-site-base-url="https://rcy1314.github.io/myblog/"
       data-site-lang="en"
     />
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -363,7 +363,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/09/three-tools-design-system-architecture-and-flow/"
+                    href="/myblog/posts/three-tools-design-system-architecture-and-flow/"
                     class="gdoc-nav__entry"
                   >
                     三款好用的繪圖工具來解決系統架構或流程圖
@@ -428,7 +428,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/12/system-design-how-to-cancel-a-running-task-in-golang/"
+                    href="/myblog/posts/system-design-how-to-cancel-a-running-task-in-golang/"
                     class="gdoc-nav__entry"
                   >
                     用 Go 語言實作如何取消正在執行的工作任務 (一)
@@ -464,7 +464,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2023/01/create-server-and-worker-for-cancel-task-in-golang/"
+                    href="/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/"
                     class="gdoc-nav__entry"
                   >
                     用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二)
@@ -500,7 +500,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/09/dependency-injection-in-go/"
+                    href="/myblog/posts/dependency-injection-in-go/"
                     class="gdoc-nav__entry"
                   >
                     用 Google 團隊推出的 Wire 工具解決 Dependency Injection
@@ -536,7 +536,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/11/simple-scheduler-with-multiple-worker-using-golang/"
+                    href="/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/"
                     class="gdoc-nav__entry is-active"
                   >
                     系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言)
@@ -623,7 +623,7 @@
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>小惡魔 - AppleBOY</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/posts/' href='/posts/'><span itemprop='name'>Posts</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言)</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/myblog/' href='/myblog/'><span itemprop='name'>小惡魔 - AppleBOY</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/myblog/posts/' href='/myblog/posts/'><span itemprop='name'>Posts</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言)</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -654,7 +654,7 @@
 <div class="gdoc-page__anchorwrap">
     <h2 id="教學影片">
         教學影片
-        <a data-clipboard-text="http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/#教學影片" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 教學影片" aria-label="Anchor to: 教學影片" href="#%e6%95%99%e5%ad%b8%e5%bd%b1%e7%89%87">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/#教學影片" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 教學影片" aria-label="Anchor to: 教學影片" href="#%e6%95%99%e5%ad%b8%e5%bd%b1%e7%89%87">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -664,19 +664,7 @@
   <iframe src="https://www.youtube.com/embed/Sh9hN635j50" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1">1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2">2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-3">3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-4">4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-5">5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-6">6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-7">7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-8">8</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>00:00 問題描述
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>00:00 問題描述
 </span></span><span style="display:flex;"><span>02:52 如何用 Go 語言寫出多個 Worker
 </span></span><span style="display:flex;"><span>04:09 執行結果及問題展示
 </span></span><span style="display:flex;"><span>05:00 優化多個請求變成單一個
@@ -684,9 +672,7 @@
 </span></span><span style="display:flex;"><span>06:41 設計 ready channel 判斷是否有新的 Worker Node
 </span></span><span style="display:flex;"><span>09:00 總結流程步驟
 </span></span><span style="display:flex;"><span>11:25 最終執行成果
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>其他線上課程請參考如下</p>
+</span></span></code></pre></div><p>其他線上課程請參考如下</p>
 <ul>
 <li><a
   class="gdoc-markdown__link"
@@ -700,7 +686,7 @@
 <div class="gdoc-page__anchorwrap">
     <h2 id="讀取多個任務問題">
         讀取多個任務問題
-        <a data-clipboard-text="http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/#讀取多個任務問題" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 讀取多個任務問題" aria-label="Anchor to: 讀取多個任務問題" href="#%e8%ae%80%e5%8f%96%e5%a4%9a%e5%80%8b%e4%bb%bb%e5%8b%99%e5%95%8f%e9%a1%8c">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/#讀取多個任務問題" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 讀取多個任務問題" aria-label="Anchor to: 讀取多個任務問題" href="#%e8%ae%80%e5%8f%96%e5%a4%9a%e5%80%8b%e4%bb%bb%e5%8b%99%e5%95%8f%e9%a1%8c">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -716,80 +702,42 @@
   
 /></p>
 <p>大家可以想看看如何解決上述的問題，底下提供一段 Go 語言實作多個 Worker 的代碼，步驟一就是開啟 Goroutine 來平行處理任務，就是在這邊會發送大量的請求到另一個 Task 服務</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-12">12</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-13">13</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-14">14</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-15">15</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-16">16</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-17">17</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-18">18</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-19">19</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-20">20</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-21">21</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-22">22</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-23">23</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-24">24</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-25">25</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-26">26</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-27">27</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-28">28</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-29">29</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-30">30</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-31">31</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-32">32</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">type</span> Poller <span style="color:#8b008b;font-weight:bold">struct</span> {
-</span></span><span style="display:flex;"><span>  routineGroup *routineGroup
-</span></span><span style="display:flex;"><span>  workerNum    <span style="color:#00688b;font-weight:bold">int</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Poller</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">routineGroup</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">routineGroup</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">workerNum</span>    <span style="color:#66d9ef">int</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (p *Poller) <span style="color:#008b45">Poll</span>(ctx context.Context) <span style="color:#00688b;font-weight:bold">error</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">for</span> i := <span style="color:#b452cd">0</span>; i &lt; p.workerNum; i++ {
-</span></span><span style="display:flex;"><span>    <span style="color:#228b22">// step01
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>    p.routineGroup.<span style="color:#008b45">Run</span>(<span style="color:#8b008b;font-weight:bold">func</span>() {
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">for</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">select</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">case</span> &lt;-ctx.<span style="color:#008b45">Done</span>():
-</span></span><span style="display:flex;"><span>          <span style="color:#8b008b;font-weight:bold">return</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">default</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#228b22">// step02
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>          task, err := p.<span style="color:#008b45">fetch</span>(ctx)
-</span></span><span style="display:flex;"><span>          <span style="color:#8b008b;font-weight:bold">if</span> err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>            log.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;can&#39;t get task&#34;</span>, err.<span style="color:#008b45">Error</span>())
-</span></span><span style="display:flex;"><span>            <span style="color:#8b008b;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Poller</span>) <span style="color:#a6e22e">Poll</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">workerNum</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// step01
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">routineGroup</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">// step02
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#a6e22e">task</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;can&#39;t get task&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
 </span></span><span style="display:flex;"><span>          }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>          <span style="color:#228b22">// step03
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>          <span style="color:#8b008b;font-weight:bold">if</span> err := p.<span style="color:#008b45">execute</span>(ctx, task); err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>            log.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;execute task error:&#34;</span>, err.<span style="color:#008b45">Error</span>())
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">// step03
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">task</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;execute task error:&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
 </span></span><span style="display:flex;"><span>          }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>    })
 </span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  p.routineGroup.<span style="color:#008b45">Wait</span>()
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> <span style="color:#8b008b;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">routineGroup</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="gdoc-page__anchorwrap">
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="改善系統設計">
         改善系統設計
-        <a data-clipboard-text="http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/#改善系統設計" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 改善系統設計" aria-label="Anchor to: 改善系統設計" href="#%e6%94%b9%e5%96%84%e7%b3%bb%e7%b5%b1%e8%a8%ad%e8%a8%88">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/#改善系統設計" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 改善系統設計" aria-label="Anchor to: 改善系統設計" href="#%e6%94%b9%e5%96%84%e7%b3%bb%e7%b5%b1%e8%a8%ad%e8%a8%88">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -801,163 +749,77 @@
   
 /></p>
 <p>從上面的設計圖，我們需要在 Poller 的 struct 內紀錄目前有多少個 Worker Node 正在執行，故新增一個 Metric struct 來記錄這些資訊</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-12">12</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-13">13</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-14">14</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-15">15</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-16">16</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-17">17</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-18">18</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-19">19</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-20">20</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">type</span> metric <span style="color:#8b008b;font-weight:bold">struct</span> {
-</span></span><span style="display:flex;"><span>  busyWorkers <span style="color:#00688b;font-weight:bold">uint64</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">metric</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">busyWorkers</span> <span style="color:#66d9ef">uint64</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#228b22">// newMetric for default metric structure
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span><span style="color:#8b008b;font-weight:bold">func</span> <span style="color:#008b45">newMetric</span>() *metric {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> &amp;metric{}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// newMetric for default metric structure
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">newMetric</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">metric</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">metric</span>{}
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (m *metric) <span style="color:#008b45">IncBusyWorker</span>() <span style="color:#00688b;font-weight:bold">uint64</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> atomic.<span style="color:#008b45">AddUint64</span>(&amp;m.busyWorkers, <span style="color:#b452cd">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">m</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metric</span>) <span style="color:#a6e22e">IncBusyWorker</span>() <span style="color:#66d9ef">uint64</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">busyWorkers</span>, <span style="color:#ae81ff">1</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (m *metric) <span style="color:#008b45">DecBusyWorker</span>() <span style="color:#00688b;font-weight:bold">uint64</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> atomic.<span style="color:#008b45">AddUint64</span>(&amp;m.busyWorkers, ^<span style="color:#658b00">uint64</span>(<span style="color:#b452cd">0</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">m</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metric</span>) <span style="color:#a6e22e">DecBusyWorker</span>() <span style="color:#66d9ef">uint64</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">busyWorkers</span>, ^uint64(<span style="color:#ae81ff">0</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (m *metric) <span style="color:#008b45">BusyWorkers</span>() <span style="color:#00688b;font-weight:bold">uint64</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> atomic.<span style="color:#008b45">LoadUint64</span>(&amp;m.busyWorkers)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">m</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metric</span>) <span style="color:#a6e22e">BusyWorkers</span>() <span style="color:#66d9ef">uint64</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">busyWorkers</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>有了上述資訊後，接著在 Poller 內多新增一個 ready channel 用來判斷是否有新的 Worker 可以分配。所以在初始化的 for 迴圈內需要判斷是否有新的 Worker Node 可以執行。</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-12">12</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (p *Poller) <span style="color:#008b45">schedule</span>() {
-</span></span><span style="display:flex;"><span>  p.<span style="color:#008b45">Lock</span>()
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">defer</span> p.<span style="color:#008b45">Unlock</span>()
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">if</span> <span style="color:#658b00">int</span>(p.metric.<span style="color:#008b45">BusyWorkers</span>()) &gt;= p.workerNum {
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">return</span>
+</span></span></code></pre></div><p>有了上述資訊後，接著在 Poller 內多新增一個 ready channel 用來判斷是否有新的 Worker 可以分配。所以在初始化的 for 迴圈內需要判斷是否有新的 Worker Node 可以執行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Poller</span>) <span style="color:#a6e22e">schedule</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Lock</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Unlock</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> int(<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">metric</span>.<span style="color:#a6e22e">BusyWorkers</span>()) <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">workerNum</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">select</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">case</span> p.ready &lt;- <span style="color:#8b008b;font-weight:bold">struct</span>{}{}:
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">default</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">ready</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">default</span>:
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>接著改寫整體 Poll 函示，多寫一個 for 迴圈來判斷是否有新的 Worker Node</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-12">12</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-13">13</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-14">14</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-15">15</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-16">16</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-17">17</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-18">18</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-19">19</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-20">20</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-21">21</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-22">22</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-23">23</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-24">24</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-25">25</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-26">26</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-27">27</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-28">28</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-29">29</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-30">30</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-31">31</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-32">32</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-33"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-33">33</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-34"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-34">34</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-35"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-35">35</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-36"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-36">36</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (p *Poller) <span style="color:#008b45">Poll</span>(ctx context.Context) <span style="color:#00688b;font-weight:bold">error</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#228b22">// scheduler
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>  <span style="color:#8b008b;font-weight:bold">for</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#228b22">// step01
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>    p.<span style="color:#008b45">schedule</span>()
+</span></span></code></pre></div><p>接著改寫整體 Poll 函示，多寫一個 for 迴圈來判斷是否有新的 Worker Node</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Poller</span>) <span style="color:#a6e22e">Poll</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// scheduler
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// step01
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">schedule</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">select</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">case</span> &lt;-p.ready:
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">case</span> &lt;-ctx.<span style="color:#008b45">Done</span>():
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">return</span> <span style="color:#8b008b;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">ready</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  LOOP:
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">for</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">select</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">case</span> &lt;-ctx.<span style="color:#008b45">Done</span>():
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">break</span> LOOP
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">default</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#228b22">// step02
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>        task, err := p.<span style="color:#008b45">fetch</span>(ctx)
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">if</span> err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>          log.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;fetch task error:&#34;</span>, err.<span style="color:#008b45">Error</span>())
-</span></span><span style="display:flex;"><span>          <span style="color:#8b008b;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">LOOP</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span> <span style="color:#a6e22e">LOOP</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// step02
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">task</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;fetch task error:&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">break</span>
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        p.metric.<span style="color:#008b45">IncBusyWorker</span>()
-</span></span><span style="display:flex;"><span>        <span style="color:#228b22">// step03
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>        p.routineGroup.<span style="color:#008b45">Run</span>(<span style="color:#8b008b;font-weight:bold">func</span>() {
-</span></span><span style="display:flex;"><span>          <span style="color:#8b008b;font-weight:bold">if</span> err := p.<span style="color:#008b45">execute</span>(ctx, task); err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>            log.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;execute task error:&#34;</span>, err.<span style="color:#008b45">Error</span>())
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">metric</span>.<span style="color:#a6e22e">IncBusyWorker</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// step03
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">routineGroup</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">task</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;execute task error:&#34;</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
 </span></span><span style="display:flex;"><span>          }
 </span></span><span style="display:flex;"><span>        })
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">break</span> LOOP
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span> <span style="color:#a6e22e">LOOP</span>
 </span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>可以看到流程步驟會變成底下</p>
+</span></span></code></pre></div><p>可以看到流程步驟會變成底下</p>
 <ol>
 <li>判斷使否有新的 Worker Node 可以執行</li>
 <li>單一 Worker Node 讀取是否有新任務</li>
@@ -965,30 +827,17 @@
 <li>返回步驟一</li>
 </ol>
 <p>只要任何任務完成後，就將 Worker Node 數量再減一，並重新執行 <code>p.schedule()</code>，確保 ready channel 不為空。</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-1">1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-2">2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-3">3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-4">4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-5">5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-6">6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-7">7</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> (p *Poller) <span style="color:#008b45">execute</span>(ctx context.Context, task <span style="color:#00688b;font-weight:bold">string</span>) <span style="color:#00688b;font-weight:bold">error</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">defer</span> <span style="color:#8b008b;font-weight:bold">func</span>() {
-</span></span><span style="display:flex;"><span>    p.metric.<span style="color:#008b45">DecBusyWorker</span>()
-</span></span><span style="display:flex;"><span>    p.<span style="color:#008b45">schedule</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Poller</span>) <span style="color:#a6e22e">execute</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">task</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">metric</span>.<span style="color:#a6e22e">DecBusyWorker</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">schedule</span>()
 </span></span><span style="display:flex;"><span>  }()
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> <span style="color:#8b008b;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="gdoc-page__anchorwrap">
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="心得">
         心得
-        <a data-clipboard-text="http://example.com/2022/11/simple-scheduler-with-multiple-worker-using-golang/#心得" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 心得" aria-label="Anchor to: 心得" href="#%e5%bf%83%e5%be%97">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/#心得" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 心得" aria-label="Anchor to: 心得" href="#%e5%bf%83%e5%be%97">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -1057,7 +906,7 @@
     </div>
 
     
-  <script defer src="/js/search-5a80054d.bundle.min.js"></script>
+  <script defer src="/myblog/js/search-5a80054d.bundle.min.js"></script>
 
   </body>
 </html>

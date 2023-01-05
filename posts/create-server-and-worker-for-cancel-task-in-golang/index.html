@@ -17,18 +17,18 @@
 
     <title>用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二) | 小惡魔 - AppleBOY</title>
 
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/myblog/favicon/favicon.svg" />
 <link
   rel="icon"
   type="image/png"
   sizes="32x32"
-  href="/favicon/favicon-32x32.png"
+  href="/myblog/favicon/favicon-32x32.png"
 />
 <link
   rel="icon"
   type="image/png"
   sizes="16x16"
-  href="/favicon/favicon-16x16.png"
+  href="/myblog/favicon/favicon-16x16.png"
 />
 
     
@@ -43,7 +43,7 @@
 上一篇『系統設計: 如何取消正在執行的工作任務 (一)』教大家如何用 Go 語言實現 canceler package 來紀錄及取消正在執行的任務。而本篇來實現上圖的 HTTP Server 及 Worker 程式碼，底下直接用 Gin 框架來快速實現 HTTP 兩個 Handle，分別是 Cancel Task 及 Ｗatch Task (如下圖標示的 1 跟 2)。
 其中上圖綠色框框 1 是用來接收使用者想要取消的任務，而 2 是用來讓 worker 進行長連接，根據不同的情境可以設定不同的等待時間。大家可能會問，為什麼不讓 Server 主動通知 Worker 就可以了，先解釋這點，這邊我們可能要先假設 Worker 存在的環境是封閉的，不能任意架設服務，故需要主動向 HTTP Server 進行詢問。其中 HTTP Server 跟 Worker 中間可以透過 gRPC 或 RESTful 進行資料交換，本篇先以 RESTful 進行說明。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/" />
+<meta property="og:url" content="https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/" />
 
 <meta property="article:section" content="Posts" />
     <meta
@@ -69,15 +69,15 @@
       "@type": "TechArticle",
       "articleSection": "Posts",
       "name": "用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二)",
-      "url" : "http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/",
+      "url" : "https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/",
       "headline": "用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二)",
       "description": "\n上一篇『系統設計: 如何取消正在執行的工作任務 (一)』教大家如何用 Go 語言實現 canceler package 來紀錄及取消正在執行的任務。而本篇來實現上圖的 HTTP Server 及 Worker 程式碼，底下直接用 Gin 框架來快速實現 HTTP 兩個 Handle，分別是 Cancel Task 及 Ｗatch Task (如下圖標示的 1 跟 2)。\n其中上圖綠色框框 1 是用來接收使用者想要取消的任務，而 2 是用來讓 worker 進行長連接，根據不同的情境可以設定不同的等待時間。大家可能會問，為什麼不讓 Server 主動通知 Worker 就可以了，先解釋這點，這邊我們可能要先假設 Worker 存在的環境是封閉的，不能任意架設服務，故需要主動向 HTTP Server 進行詢問。其中 HTTP Server 跟 Worker 中間可以透過 gRPC 或 RESTful 進行資料交換，本篇先以 RESTful 進行說明。",
-      "wordCount" : "553",
+      "wordCount" : "436",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/"
+          "@id": "https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/"
       },
       "copyrightHolder" : "小惡魔 - AppleBOY",
       "copyrightYear" : "2023",
@@ -87,7 +87,7 @@
       "publisher":{
           "@type":"Organization",
           "name": "小惡魔 - AppleBOY",
-          "url": "http://example.com",
+          "url": "https://rcy1314.github.io/myblog/",
           "logo": {
               "@type": "ImageObject",
               "url": "https://lh3.googleusercontent.com/Kq9CxHZWopKj__EgF_BpzLv8FhwvDkc0iacrl9V5IJjpr-dZ7Y5O-Vc1i9FhGQ8gHTdKeBisG_1ie1IONQXmK0a3myyl_BNouP76CLHGHRzsPPRgRF3RiKYqOkdS86mZOIu7KYFTUio=w1920-h1080",
@@ -100,68 +100,68 @@
 
 
     
-  <script src="/js/colortheme-d3e4d351.bundle.min.js"></script>
-<script src="/js/main-56ca818c.bundle.min.js"></script>
+  <script src="/myblog/js/colortheme-d3e4d351.bundle.min.js"></script>
+<script src="/myblog/js/main-56ca818c.bundle.min.js"></script>
 
 <link
   rel="preload"
   as="font"
-  href="/fonts/Metropolis.woff2"
+  href="/myblog/fonts/Metropolis.woff2"
   type="font/woff2"
   crossorigin="anonymous"
 />
 <link
   rel="preload"
   as="font"
-  href="/fonts/LiberationSans.woff2"
+  href="/myblog/fonts/LiberationSans.woff2"
   type="font/woff2"
   crossorigin="anonymous"
 />
 
 <link
   rel="preload"
-  href="/main-1ebf16ca.min.css"
+  href="/myblog/main-1ebf16ca.min.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/main-1ebf16ca.min.css"
+  href="/myblog/main-1ebf16ca.min.css"
   media="all"
 />
 
 <link
   rel="preload"
-  href="/mobile-79ddc617.min.css"
+  href="/myblog/mobile-79ddc617.min.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/mobile-79ddc617.min.css"
+  href="/myblog/mobile-79ddc617.min.css"
   media="screen and (max-width: 45rem)"
 />
 
 <link
   rel="preload"
-  href="/print-735ccc12.min.css"
+  href="/myblog/print-735ccc12.min.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/print-735ccc12.min.css"
+  href="/myblog/print-735ccc12.min.css"
   media="print"
 />
 
 <link
   rel="preload"
-  href="/custom.css"
+  href="/myblog/custom.css"
   as="style"
 />
 <link
   rel="stylesheet"
-  href="/custom.css"
+  href="/myblog/custom.css"
   media="all"
 />
-  <link href="http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/" rel="canonical" type="text/html" />
+  <link href="https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -198,11 +198,11 @@
       </label>
     
     <div>
-      <a class="gdoc-brand gdoc-header__link" href="http://example.com">
+      <a class="gdoc-brand gdoc-header__link" href="https://rcy1314.github.io/myblog/">
         <span class="flex align-center">
           <img
             class="gdoc-brand__img"
-            src="/brand.svg"
+            src="/myblog/brand.svg"
             alt=""
           />
           <span class="gdoc-brand__title">小惡魔 - AppleBOY</span>
@@ -230,7 +230,7 @@
         </span>
 
         <span class="gdoc-menu-header__home">
-          <a href="http://example.com" class="gdoc-header__link">
+          <a href="https://rcy1314.github.io/myblog/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
               <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
@@ -277,7 +277,7 @@
       placeholder="Search..."
       aria-label="Search"
       maxlength="64"
-      data-site-base-url="http://example.com"
+      data-site-base-url="https://rcy1314.github.io/myblog/"
       data-site-lang="en"
     />
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -366,7 +366,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/09/three-tools-design-system-architecture-and-flow/"
+                    href="/myblog/posts/three-tools-design-system-architecture-and-flow/"
                     class="gdoc-nav__entry"
                   >
                     三款好用的繪圖工具來解決系統架構或流程圖
@@ -431,7 +431,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/12/system-design-how-to-cancel-a-running-task-in-golang/"
+                    href="/myblog/posts/system-design-how-to-cancel-a-running-task-in-golang/"
                     class="gdoc-nav__entry"
                   >
                     用 Go 語言實作如何取消正在執行的工作任務 (一)
@@ -467,7 +467,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2023/01/create-server-and-worker-for-cancel-task-in-golang/"
+                    href="/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/"
                     class="gdoc-nav__entry is-active"
                   >
                     用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二)
@@ -503,7 +503,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/09/dependency-injection-in-go/"
+                    href="/myblog/posts/dependency-injection-in-go/"
                     class="gdoc-nav__entry"
                   >
                     用 Google 團隊推出的 Wire 工具解決 Dependency Injection
@@ -539,7 +539,7 @@
               
                 <span class="flex">
                   <a
-                    href="/2022/11/simple-scheduler-with-multiple-worker-using-golang/"
+                    href="/myblog/posts/simple-scheduler-with-multiple-worker-using-golang/"
                     class="gdoc-nav__entry"
                   >
                     系統設計: 處理服務讀取多個任務遇到的問題 (Go 語言)
@@ -626,7 +626,7 @@
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>小惡魔 - AppleBOY</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/posts/' href='/posts/'><span itemprop='name'>Posts</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二)</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/myblog/' href='/myblog/'><span itemprop='name'>小惡魔 - AppleBOY</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/myblog/posts/' href='/myblog/posts/'><span itemprop='name'>Posts</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>用 Go 語言建立 Web 及 Worker 服務實現取消任務 (二)</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -666,176 +666,89 @@
 <div class="gdoc-page__anchorwrap">
     <h2 id="實現-http-服務">
         實現 HTTP 服務
-        <a data-clipboard-text="http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/#實現-http-服務" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 實現 HTTP 服務" aria-label="Anchor to: 實現 HTTP 服務" href="#%e5%af%a6%e7%8f%be-http-%e6%9c%8d%e5%8b%99">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/#實現-http-服務" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 實現 HTTP 服務" aria-label="Anchor to: 實現 HTTP 服務" href="#%e5%af%a6%e7%8f%be-http-%e6%9c%8d%e5%8b%99">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <p>先透過 Gin 框架簡單實現 HTTP 服務</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-12">12</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-13">13</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-14">14</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-15">15</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-16">16</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-17">17</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-18">18</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-19">19</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-0-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-0-20">20</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">package</span> main
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">import</span> (
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;context&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;net/http&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;context&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;time&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;github.com/gin-gonic/gin&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;github.com/gin-gonic/gin&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> <span style="color:#008b45">main</span>() {
-</span></span><span style="display:flex;"><span>  r := gin.<span style="color:#008b45">Default</span>()
-</span></span><span style="display:flex;"><span>  r.<span style="color:#008b45">GET</span>(<span style="color:#cd5555">&#34;/ping&#34;</span>, <span style="color:#8b008b;font-weight:bold">func</span>(c *gin.Context) {
-</span></span><span style="display:flex;"><span>    c.<span style="color:#008b45">JSON</span>(http.StatusOK, gin.H{
-</span></span><span style="display:flex;"><span>      <span style="color:#cd5555">&#34;message&#34;</span>: <span style="color:#cd5555">&#34;pong&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/ping&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">H</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;pong&#34;</span>,
 </span></span><span style="display:flex;"><span>    })
 </span></span><span style="display:flex;"><span>  })
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  r.<span style="color:#008b45">Run</span>() <span style="color:#228b22">// listen and serve on 0.0.0.0:8080 (for windows &#34;localhost:8080&#34;)
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><img
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>() <span style="color:#75715e">// listen and serve on 0.0.0.0:8080 (for windows &#34;localhost:8080&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><img
   src="https://i.imgur.com/3WqBNOZ.png"
   alt="cancel a task"
   
 /></p>
 <p>先來看看使用者取消任務 (ID 為 1234)，服務端該如何實現？上一篇教學有實現了 <code>schedule</code> package</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-1-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-1-11">11</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">package</span> schedule
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">schedule</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">type</span> Engine <span style="color:#8b008b;font-weight:bold">struct</span> {
-</span></span><span style="display:flex;"><span>  *canceler
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Engine</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">canceler</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> <span style="color:#008b45">New</span>() *Engine {
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> &amp;Engine{
-</span></span><span style="display:flex;"><span>    canceler: <span style="color:#008b45">newCanceler</span>(),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">Engine</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Engine</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">canceler</span>: <span style="color:#a6e22e">newCanceler</span>(),
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>這時候只需要透過 New() 就可以。</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-1">1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-2-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-2-2">2</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#228b22">// initial schedule instance
-</span></span></span><span style="display:flex;"><span><span style="color:#228b22"></span>s := schedule.<span style="color:#008b45">New</span>()
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>接著實現 Cancel Task Handler。</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-3-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-3-10">10</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>r.<span style="color:#008b45">GET</span>(<span style="color:#cd5555">&#34;/cancel-task/:id&#34;</span>, <span style="color:#8b008b;font-weight:bold">func</span>(c *gin.Context) {
-</span></span><span style="display:flex;"><span>  taskID := c.<span style="color:#008b45">Param</span>(<span style="color:#cd5555">&#34;id&#34;</span>)
+</span></span></code></pre></div><p>這時候只需要透過 New() 就可以。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// initial schedule instance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">schedule</span>.<span style="color:#a6e22e">New</span>()
+</span></span></code></pre></div><p>接著實現 Cancel Task Handler。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/cancel-task/:id&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">taskID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Param</span>(<span style="color:#e6db74">&#34;id&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">if</span> err := s.<span style="color:#008b45">Cancel</span>(context.<span style="color:#008b45">Background</span>(), taskID); err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>    c.<span style="color:#008b45">String</span>(http.StatusInternalServerError, <span style="color:#cd5555">&#34;crash&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">return</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Cancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">taskID</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>, <span style="color:#e6db74">&#34;crash&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  c.<span style="color:#008b45">String</span>(http.StatusOK, <span style="color:#cd5555">&#34;ok&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#e6db74">&#34;ok&#34;</span>)
 </span></span><span style="display:flex;"><span>})
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>上述函式執行 Cancel 會將任務 ID 直接紀錄在 struct map 內，後續可以接著更新任務狀態為『取消』，這邊就看大家怎麼存任務，最直接的方式就是更新資料庫。接著時線 <code>Watch Task</code> 函式</p>
+</span></span></code></pre></div><p>上述函式執行 Cancel 會將任務 ID 直接紀錄在 struct map 內，後續可以接著更新任務狀態為『取消』，這邊就看大家怎麼存任務，最直接的方式就是更新資料庫。接著時線 <code>Watch Task</code> 函式</p>
 <p><img
   src="https://i.imgur.com/ebhWNo9.png"
   alt="cancel a task"
   
 /></p>
 <p>要做到即時取消任務，故 Worker 需要長時間連接上 HTTP 服務，避免過多的請求，造成不必要的負擔，畢竟任務可能需要長時間去跑，時間設定太短，就會造成 HTTP Server 的負擔。</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-12">12</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-13">13</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-4-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-4-14">14</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>r.<span style="color:#008b45">GET</span>(<span style="color:#cd5555">&#34;/watch-task/:id&#34;</span>, <span style="color:#8b008b;font-weight:bold">func</span>(c *gin.Context) {
-</span></span><span style="display:flex;"><span>  taskID := c.<span style="color:#008b45">Param</span>(<span style="color:#cd5555">&#34;id&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/watch-task/:id&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">taskID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Param</span>(<span style="color:#e6db74">&#34;id&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  ctxDone, cancel := context.<span style="color:#008b45">WithTimeout</span>(context.<span style="color:#008b45">Background</span>(), <span style="color:#b452cd">5</span>*time.Second)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">defer</span> <span style="color:#008b45">cancel</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ctxDone</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">5</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  ok, _ := s.<span style="color:#008b45">Cancelled</span>(ctxDone, taskID)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">if</span> ok {
-</span></span><span style="display:flex;"><span>    c.<span style="color:#008b45">String</span>(http.StatusOK, <span style="color:#cd5555">&#34;true&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">return</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ok</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Cancelled</span>(<span style="color:#a6e22e">ctxDone</span>, <span style="color:#a6e22e">taskID</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#e6db74">&#34;true&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  c.<span style="color:#008b45">String</span>(http.StatusOK, <span style="color:#cd5555">&#34;false&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#e6db74">&#34;false&#34;</span>)
 </span></span><span style="display:flex;"><span>})
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>上述程式碼可以看到，透過宣告 context timeout 來決定需要等待多長的時間，超過時間後就回覆 <code>false</code>，由 HTTP 服務端決定 Worker 連接上來後可以等待的時間。</p>
+</span></span></code></pre></div><p>上述程式碼可以看到，透過宣告 context timeout 來決定需要等待多長的時間，超過時間後就回覆 <code>false</code>，由 HTTP 服務端決定 Worker 連接上來後可以等待的時間。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="實現-worker-服務">
         實現 Worker 服務
-        <a data-clipboard-text="http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/#實現-worker-服務" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 實現 Worker 服務" aria-label="Anchor to: 實現 Worker 服務" href="#%e5%af%a6%e7%8f%be-worker-%e6%9c%8d%e5%8b%99">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/#實現-worker-服務" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 實現 Worker 服務" aria-label="Anchor to: 實現 Worker 服務" href="#%e5%af%a6%e7%8f%be-worker-%e6%9c%8d%e5%8b%99">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -847,137 +760,71 @@
   
 /></p>
 <p>先假設有兩個任務分別是 <code>1234</code> 及 <code>5678</code>，當這兩個任務正在執行的時候，也順便開 goroutine 在背景跟 HTTP 服務連接，等到任務結束或收到 HTTP 端的中指請求，則結束各自的 Goroutine。</p>
-<div class="highlight"><div style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-1"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-1"> 1</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-2"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-2"> 2</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-3"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-3"> 3</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-4"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-4"> 4</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-5"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-5"> 5</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-6"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-6"> 6</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-7"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-7"> 7</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-8"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-8"> 8</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-9"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-9"> 9</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-10"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-10">10</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-11"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-11">11</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-12"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-12">12</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-13"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-13">13</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-14"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-14">14</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-15"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-15">15</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-16"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-16">16</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-17"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-17">17</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-18"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-18">18</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-19"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-19">19</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-20"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-20">20</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-21"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-21">21</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-22"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-22">22</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-23"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-23">23</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-24"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-24">24</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-25"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-25">25</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-26"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-26">26</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-27"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-27">27</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-28"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-28">28</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-29"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-29">29</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-30"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-30">30</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-31"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-31">31</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-32"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-32">32</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-33"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-33">33</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-34"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-34">34</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-35"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-35">35</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-36"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-36">36</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-37"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-37">37</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-38"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-38">38</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-39"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-39">39</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-40"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-40">40</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-41"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-41">41</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-42"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-42">42</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-43"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-43">43</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-44"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-44">44</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-45"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-45">45</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-46"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-46">46</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-47"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-47">47</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-48"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-48">48</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-49"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-49">49</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-50"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-50">50</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-51"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-51">51</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-52"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-52">52</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-53"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-53">53</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-54"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-54">54</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-55"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-55">55</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-56"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-56">56</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-57"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-57">57</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-58"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-58">58</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-59"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-59">59</a>
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="hl-5-60"><a style="outline:none;text-decoration:none;color:inherit" href="#hl-5-60">60</a>
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">package</span> main
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">import</span> (
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;io&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;net/http&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;os&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#cd5555">&#34;sync&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;sync&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> <span style="color:#008b45">cancelTask</span>(id <span style="color:#00688b;font-weight:bold">string</span>) []<span style="color:#00688b;font-weight:bold">byte</span> {
-</span></span><span style="display:flex;"><span>  req, err := http.<span style="color:#008b45">NewRequest</span>(http.MethodGet, <span style="color:#cd5555">&#34;http://localhost:8080/watch-task/&#34;</span>+id, <span style="color:#8b008b;font-weight:bold">nil</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">if</span> err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>    fmt.<span style="color:#008b45">Printf</span>(<span style="color:#cd5555">&#34;client: could not create request: %s\n&#34;</span>, err)
-</span></span><span style="display:flex;"><span>    os.<span style="color:#008b45">Exit</span>(<span style="color:#b452cd">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">cancelTask</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>) []<span style="color:#66d9ef">byte</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;http://localhost:8080/watch-task/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">id</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;client: could not create request: %s\n&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  res, err := http.DefaultClient.<span style="color:#008b45">Do</span>(req)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">if</span> err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>    fmt.<span style="color:#008b45">Printf</span>(<span style="color:#cd5555">&#34;client: error making http request: %s\n&#34;</span>, err)
-</span></span><span style="display:flex;"><span>    os.<span style="color:#008b45">Exit</span>(<span style="color:#b452cd">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;client: error making http request: %s\n&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  resBody, err := io.<span style="color:#008b45">ReadAll</span>(res.Body)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">if</span> err != <span style="color:#8b008b;font-weight:bold">nil</span> {
-</span></span><span style="display:flex;"><span>    fmt.<span style="color:#008b45">Printf</span>(<span style="color:#cd5555">&#34;client: could not read response body: %s\n&#34;</span>, err)
-</span></span><span style="display:flex;"><span>    os.<span style="color:#008b45">Exit</span>(<span style="color:#b452cd">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">resBody</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;client: could not read response body: %s\n&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
 </span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">return</span> resBody
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resBody</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b008b;font-weight:bold">func</span> <span style="color:#008b45">main</span>() {
-</span></span><span style="display:flex;"><span>  wg := &amp;sync.WaitGroup{}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  wg.<span style="color:#008b45">Add</span>(<span style="color:#b452cd">1</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">go</span> <span style="color:#8b008b;font-weight:bold">func</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">defer</span> wg.<span style="color:#008b45">Done</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">for</span> {
-</span></span><span style="display:flex;"><span>      resp := <span style="color:#658b00">string</span>(<span style="color:#008b45">cancelTask</span>(<span style="color:#cd5555">&#34;1234&#34;</span>))
-</span></span><span style="display:flex;"><span>      fmt.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;task[1234]: cancel the task:&#34;</span>, resp)
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">if</span> resp == <span style="color:#cd5555">&#34;true&#34;</span> {
-</span></span><span style="display:flex;"><span>        fmt.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;task[1234]: get cancel event and canceld the task&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">return</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">resp</span> <span style="color:#f92672">:=</span> string(<span style="color:#a6e22e">cancelTask</span>(<span style="color:#e6db74">&#34;1234&#34;</span>))
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;task[1234]: cancel the task:&#34;</span>, <span style="color:#a6e22e">resp</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;true&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;task[1234]: get cancel event and canceld the task&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
 </span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>  }()
-</span></span><span style="display:flex;"><span>  wg.<span style="color:#008b45">Add</span>(<span style="color:#b452cd">1</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#8b008b;font-weight:bold">go</span> <span style="color:#8b008b;font-weight:bold">func</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">defer</span> wg.<span style="color:#008b45">Done</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#8b008b;font-weight:bold">for</span> {
-</span></span><span style="display:flex;"><span>      resp := <span style="color:#658b00">string</span>(<span style="color:#008b45">cancelTask</span>(<span style="color:#cd5555">&#34;5678&#34;</span>))
-</span></span><span style="display:flex;"><span>      fmt.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;task[5678]: cancel the task:&#34;</span>, resp)
-</span></span><span style="display:flex;"><span>      <span style="color:#8b008b;font-weight:bold">if</span> resp == <span style="color:#cd5555">&#34;true&#34;</span> {
-</span></span><span style="display:flex;"><span>        fmt.<span style="color:#008b45">Println</span>(<span style="color:#cd5555">&#34;task[5678]: get cancel event and canceld the task&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#8b008b;font-weight:bold">return</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">resp</span> <span style="color:#f92672">:=</span> string(<span style="color:#a6e22e">cancelTask</span>(<span style="color:#e6db74">&#34;5678&#34;</span>))
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;task[5678]: cancel the task:&#34;</span>, <span style="color:#a6e22e">resp</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;true&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;task[5678]: get cancel event and canceld the task&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
 </span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>  }()
-</span></span><span style="display:flex;"><span>  wg.<span style="color:#008b45">Wait</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>上面程式碼範例請不要直接套用在專案內，因為有些狀況尚未寫進去，像是一般 HTTP Client 不會用預設的 <code>http.DefaultClient</code>，因為沒有設定 Timeout 會讓系統整個掛掉，另外 Goroutine 也沒有傳入 Context，會造成背景 Goroutine 都不會結束。這邊只是為了講解才這樣寫的。</p>
+</span></span></code></pre></div><p>上面程式碼範例請不要直接套用在專案內，因為有些狀況尚未寫進去，像是一般 HTTP Client 不會用預設的 <code>http.DefaultClient</code>，因為沒有設定 Timeout 會讓系統整個掛掉，另外 Goroutine 也沒有傳入 Context，會造成背景 Goroutine 都不會結束。這邊只是為了講解才這樣寫的。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="整合測試">
         整合測試
-        <a data-clipboard-text="http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/#整合測試" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 整合測試" aria-label="Anchor to: 整合測試" href="#%e6%95%b4%e5%90%88%e6%b8%ac%e8%a9%a6">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/#整合測試" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 整合測試" aria-label="Anchor to: 整合測試" href="#%e6%95%b4%e5%90%88%e6%b8%ac%e8%a9%a6">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -991,7 +838,7 @@
 <div class="gdoc-page__anchorwrap">
     <h2 id="心得">
         心得
-        <a data-clipboard-text="http://example.com/2023/01/create-server-and-worker-for-cancel-task-in-golang/#心得" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 心得" aria-label="Anchor to: 心得" href="#%e5%bf%83%e5%be%97">
+        <a data-clipboard-text="https://rcy1314.github.io/myblog/posts/create-server-and-worker-for-cancel-task-in-golang/#心得" class="gdoc-page__anchor clip flex align-center" title="Anchor to: 心得" aria-label="Anchor to: 心得" href="#%e5%bf%83%e5%be%97">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -1071,7 +918,7 @@
     </div>
 
     
-  <script defer src="/js/search-5a80054d.bundle.min.js"></script>
+  <script defer src="/myblog/js/search-5a80054d.bundle.min.js"></script>
 
   </body>
 </html>
